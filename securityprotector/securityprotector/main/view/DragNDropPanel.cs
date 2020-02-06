@@ -53,8 +53,7 @@ namespace securityprotector.main.view
             pictureBox.Height = 100;
             this.Controls.Add(pictureBox);
 
-            string path = Path.Combine(Environment.CurrentDirectory, @"res\folder.png");
-            Bitmap sourceImage = new Bitmap(path);
+            Bitmap sourceImage = Properties.Resources.folder;
             Size resize = new Size(70, 70);
             Bitmap resizeImage = new Bitmap(sourceImage, resize);
             pictureBox.Image = resizeImage;
