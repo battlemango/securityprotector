@@ -10,9 +10,6 @@ namespace securityprotector.main.view
 {
     class IconRadioGroup : GroupBox
     {
-        public const String FOLDER_TYPE_RECYCLE = "recycle";
-        public const String FOLDER_TYPE_NETWORK = "network";
-
         private ArrayList mRadioButtonList;
         private RadioButton mSelectedRadioButton;
 
@@ -37,13 +34,13 @@ namespace securityprotector.main.view
             tlp.Dock = DockStyle.Fill;
 
             RadioButton radioRecycle = new RadioButton();
-            radioRecycle.Text = FOLDER_TYPE_RECYCLE;
+            radioRecycle.Text = CommonConstants.FOLDER_TYPE_RECYCLE;
             radioRecycle.Click += new EventHandler(radioButtonClicked);
             tlp.Controls.Add(radioRecycle);
             mRadioButtonList.Add(radioRecycle);
 
             RadioButton radioNetwork = new RadioButton();
-            radioNetwork.Text = FOLDER_TYPE_NETWORK;
+            radioNetwork.Text = CommonConstants.FOLDER_TYPE_NETWORK;
             radioNetwork.Click += new EventHandler(radioButtonClicked);
             tlp.Controls.Add(radioNetwork);
             mRadioButtonList.Add(radioNetwork);

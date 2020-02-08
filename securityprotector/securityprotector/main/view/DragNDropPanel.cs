@@ -84,5 +84,33 @@ namespace securityprotector.main.view
                 //}
             }
         }
+
+        public void changeFolderName(String iconType)
+        {
+            String folderName = "휴지통.{645FF040-5081-101B-9F08-00AA002F954E}";
+            switch (iconType)
+            {
+                case CommonConstants.FOLDER_TYPE_RECYCLE:
+                    folderName = "휴지통.{645FF040-5081-101B-9F08-00AA002F954E}";
+                    break;
+                case CommonConstants.FOLDER_TYPE_NETWORK:
+                    folderName = "네트워크설정.{208D2C60-3AEA-1069-A2D7-08002B30309D}";
+                    break;
+            }
+
+            String directoryName = Path.GetDirectoryName(mSelectedFilePath);
+            Console.WriteLine("direc" + directoryName);
+            
+            //FileInfo fileRename = new FileInfo(mSelectedFilePath);
+            DirectoryInfo di = new DirectoryInfo(mSelectedFilePath);
+
+            if (di.Exists)
+            {
+                Console.WriteLine("Exists");
+                di.MoveTo(directoryName+"\\"+ folderName); //이미있으면 에러
+                //di.MoveTo(mSelectedFilePath+"aa"); //이미있으면 에러
+            }
+            
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using securityprotector.main.view;
+﻿using securityprotector.main;
+using securityprotector.main.view;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace securityprotector
 {
     public partial class Form1 : Form
     {
+        private DragNDropPanel mDragNDropPanel;
         public Form1()
         {
             InitializeComponent();
@@ -24,13 +26,13 @@ namespace securityprotector
 
         private void initViews()
         {
-            DragNDropPanel dragNDropPanel = new DragNDropPanel();
-            dragNDropPanel.Dock = DockStyle.Left;
-            dragNDropPanel.Top = 5;
-            dragNDropPanel.Left = 10;
-            dragNDropPanel.Width = 200;
-            dragNDropPanel.Height = 300;
-            this.Controls.Add(dragNDropPanel);
+            mDragNDropPanel = new DragNDropPanel();
+            mDragNDropPanel.Dock = DockStyle.Left;
+            mDragNDropPanel.Top = 5;
+            mDragNDropPanel.Left = 10;
+            mDragNDropPanel.Width = 200;
+            mDragNDropPanel.Height = 300;
+            this.Controls.Add(mDragNDropPanel);
 
 
 
@@ -44,5 +46,9 @@ namespace securityprotector
             this.Controls.Add(radioGp);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            mDragNDropPanel.changeFolderName(CommonConstants.FOLDER_TYPE_RECYCLE);
+        }
     }
 }
