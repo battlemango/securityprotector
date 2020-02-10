@@ -53,6 +53,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="main\CommonConstants.cs" />
+    <Compile Include="main\CommonUtils.cs" />
     <Compile Include="main\view\DragNDropPanel.cs">
       <SubType>Component</SubType>
     </Compile>

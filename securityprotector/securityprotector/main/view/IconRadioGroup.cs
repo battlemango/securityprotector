@@ -10,11 +10,18 @@ namespace securityprotector.main.view
 {
     class IconRadioGroup : GroupBox
     {
+        private TableLayoutPanel mTableLayoutPanel;
         private ArrayList mRadioButtonList;
         private RadioButton mSelectedRadioButton;
 
         public IconRadioGroup()
         {
+            mTableLayoutPanel = new TableLayoutPanel();
+            mTableLayoutPanel.ColumnCount = 1;
+            mTableLayoutPanel.RowCount = 6;
+            mTableLayoutPanel.Dock = DockStyle.Fill;
+            Controls.Add(mTableLayoutPanel);
+
             this.Text = "type";
             mRadioButtonList = new ArrayList();
             setRadioButtons();
@@ -25,28 +32,37 @@ namespace securityprotector.main.view
             return mSelectedRadioButton;
         }
 
+        public String getSelectedRadioName()
+        {
+            if(mSelectedRadioButton == null)
+            {
+                return null;
+            }
+            return mSelectedRadioButton.Text;
+        }
+
         private void setRadioButtons()
         {
-            TableLayoutPanel tlp = new TableLayoutPanel();
-            tlp.ColumnCount = 1;
-            tlp.RowCount = 6;
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_NORMAL);
 
-            tlp.Dock = DockStyle.Fill;
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_RECYCLE);
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_NETWORK);
+            //setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_COMPUTER);
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_INTERNET);
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_CONTROLLER);
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_PRINTER);
+            setRadioButton(new RadioButton(), CommonConstants.FOLDER_TYPE_EXTENTION);
 
-            RadioButton radioRecycle = new RadioButton();
-            radioRecycle.Text = CommonConstants.FOLDER_TYPE_RECYCLE;
-            radioRecycle.Click += new EventHandler(radioButtonClicked);
-            tlp.Controls.Add(radioRecycle);
-            mRadioButtonList.Add(radioRecycle);
-
-            RadioButton radioNetwork = new RadioButton();
-            radioNetwork.Text = CommonConstants.FOLDER_TYPE_NETWORK;
-            radioNetwork.Click += new EventHandler(radioButtonClicked);
-            tlp.Controls.Add(radioNetwork);
-            mRadioButtonList.Add(radioNetwork);
-
-            this.Controls.Add(tlp);
             initChecked();
+        }
+
+        private void setRadioButton(RadioButton radioButton, String text)
+        {
+            radioButton.Text = text;
+            radioButton.Click += new EventHandler(radioButtonClicked);
+
+            mTableLayoutPanel.Controls.Add(radioButton);
+            mRadioButtonList.Add(radioButton);
         }
 
         private void radioButtonClicked(object sender, EventArgs e)

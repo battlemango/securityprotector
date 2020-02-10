@@ -13,13 +13,13 @@ namespace securityprotector.main.view
     {
         private String mSelectedFilePath;
         private Label mLabel;
+        private Random mRnd = new Random();
 
         public DragNDropPanel()
         {
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(dragEnter);
             this.DragDrop += new DragEventHandler(dragDrop);
-            //BackColor = Color.Black;
 
             mLabel = new Label();
             mLabel.AutoSize = true;
@@ -75,40 +75,106 @@ namespace securityprotector.main.view
                 mSelectedFilePath = file;
                 setLabel();
                 break;
-                //File.SetAttributes(file, FileAttributes.NotContentIndexed);
-                //이름 바꾸기
-                //   FileInfo fileRename = new FileInfo(file);
-                // if (fileRename.Exists)
-                //{
-                //    fileRename.MoveTo(file + "bb"); //이미있으면 에러
-                //}
+            }
+        }
+
+        public void removeFileExtention()
+        {
+            if (String.IsNullOrEmpty(mSelectedFilePath))
+            {
+                string message = "please drag file";
+                CommonUtils.showMessageBox("warning", message);
+                return;
+            }
+
+            String directoryName = Path.GetDirectoryName(mSelectedFilePath);
+            String newFileName = Path.GetFileNameWithoutExtension(mSelectedFilePath);
+
+            FileInfo fi = new FileInfo(mSelectedFilePath);
+            if (fi.Exists)
+            {
+                Console.WriteLine("Exists");
+                try
+                {
+                    fi.MoveTo(directoryName + "\\" + newFileName); //이미있으면 에러
+                    mLabel.Text = "drag here";
+                    CommonUtils.showMessageBox("wow", "file name changed");
+                }
+                catch (Exception e)
+                {
+                    //mLabel.Text = "something is wrong";
+                    CommonUtils.showMessageBox("warning", "이미 확장자 없거나 다른 이유로 성공못함");
+                }
+
+            }
+            else
+            {
+                string message = "it doesn't file, please drag file";
+                CommonUtils.showMessageBox("warning", message);
             }
         }
 
         public void changeFolderName(String iconType)
         {
-            String folderName = "휴지통.{645FF040-5081-101B-9F08-00AA002F954E}";
+            if (String.IsNullOrEmpty(mSelectedFilePath))
+            {
+                string message = "please drag folder";
+                CommonUtils.showMessageBox("warning", message);
+                return;
+            }
+
+            String folderName = CommonConstants.FOLDER_NAME_RECYCLE;
             switch (iconType)
             {
                 case CommonConstants.FOLDER_TYPE_RECYCLE:
-                    folderName = "휴지통.{645FF040-5081-101B-9F08-00AA002F954E}";
+                    folderName = CommonConstants.FOLDER_NAME_RECYCLE;
                     break;
                 case CommonConstants.FOLDER_TYPE_NETWORK:
-                    folderName = "네트워크설정.{208D2C60-3AEA-1069-A2D7-08002B30309D}";
+                    folderName = CommonConstants.FOLDER_NAME_NETWORK;
+                    break;
+                case CommonConstants.FOLDER_TYPE_COMPUTER:
+                    folderName = CommonConstants.FOLDER_NAME_COMPUTER;
+                    break;
+                case CommonConstants.FOLDER_TYPE_CONTROLLER:
+                    folderName = CommonConstants.FOLDER_NAME_CONTROLLER;
+                    break;
+                case CommonConstants.FOLDER_TYPE_INTERNET:
+                    folderName = CommonConstants.FOLDER_NAME_INTERNET;
+                    break;
+                case CommonConstants.FOLDER_TYPE_PRINTER:
+                    folderName = CommonConstants.FOLDER_NAME_PRINTER;
+                    break;
+                case CommonConstants.FOLDER_TYPE_NORMAL:
+                    folderName = "normal" + mRnd.Next(1000);
                     break;
             }
 
             String directoryName = Path.GetDirectoryName(mSelectedFilePath);
-            Console.WriteLine("direc" + directoryName);
             
             //FileInfo fileRename = new FileInfo(mSelectedFilePath);
+
             DirectoryInfo di = new DirectoryInfo(mSelectedFilePath);
 
             if (di.Exists)
             {
                 Console.WriteLine("Exists");
-                di.MoveTo(directoryName+"\\"+ folderName); //이미있으면 에러
-                //di.MoveTo(mSelectedFilePath+"aa"); //이미있으면 에러
+                try
+                {
+                    di.MoveTo(directoryName + "\\" + folderName); //이미있으면 에러
+                    mLabel.Text = "drag here";
+                    CommonUtils.showMessageBox("wow", "folder name changed");
+                }
+                catch(Exception e)
+                {
+                    //mLabel.Text = "something is wrong";
+                    CommonUtils.showMessageBox("warning", "같은 이름의 폴더를 선택한듯");
+                }
+                
+            }
+            else
+            {
+                string message = "it doesn't folder, please drag folder";
+                CommonUtils.showMessageBox("warning", message);
             }
             
         }

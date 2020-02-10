@@ -16,12 +16,14 @@ namespace securityprotector
     public partial class Form1 : Form
     {
         private DragNDropPanel mDragNDropPanel;
+        private IconRadioGroup mIconRadioGroup;
+
         public Form1()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.Text = "SecurityProtector";
             initViews();
-
         }
 
         private void initViews()
@@ -30,25 +32,37 @@ namespace securityprotector
             mDragNDropPanel.Dock = DockStyle.Left;
             mDragNDropPanel.Top = 5;
             mDragNDropPanel.Left = 10;
-            mDragNDropPanel.Width = 200;
+            mDragNDropPanel.Width = 120;
             mDragNDropPanel.Height = 300;
             this.Controls.Add(mDragNDropPanel);
 
-
-
-            IconRadioGroup radioGp = new IconRadioGroup();
+            mIconRadioGroup = new IconRadioGroup();
             //radioGp.Dock = DockStyle.None;
-            radioGp.Top = 0;
-            radioGp.Left = 200;
-            radioGp.Width = 150;
-            radioGp.Height = 300;
+            mIconRadioGroup.Top = 0;
+            mIconRadioGroup.Left = 150;
+            mIconRadioGroup.Width = 150;
+            mIconRadioGroup.Height = 300;
 
-            this.Controls.Add(radioGp);
+            this.Controls.Add(mIconRadioGroup);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            mDragNDropPanel.changeFolderName(CommonConstants.FOLDER_TYPE_RECYCLE);
+            string type = mIconRadioGroup.getSelectedRadioName();
+            if(type == CommonConstants.FOLDER_TYPE_EXTENTION)
+            {
+                mDragNDropPanel.removeFileExtention();
+            }
+            else
+            {
+                mDragNDropPanel.changeFolderName(mIconRadioGroup.getSelectedRadioName());
+            }
+            
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
